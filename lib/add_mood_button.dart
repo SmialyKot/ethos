@@ -9,28 +9,22 @@ class AddMood extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RawMaterialButton(
-        onPressed: onPressed,
-        enableFeedback: true,
-        fillColor: Colors.blueAccent,
-        splashColor: Colors.cyan,
-        shape: new CircleBorder(),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: 8.0,
-            horizontal: 20.0,
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              const Icon(
+    return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 11.0, horizontal: 11.0),
+        child: Container(
+            width: 65.0,
+            height: 65.0,
+            child: RawMaterialButton(
+              shape: CircleBorder(),
+              onPressed: onPressed,
+              enableFeedback: true,
+              fillColor: Colors.blueAccent,
+              splashColor: Colors.blue,
+              child: Icon(
                 Icons.add_chart,
-                color: Colors.black,
+                color: Colors.black45,
+                size: 40.0,
               ),
-            ],
-
-          )
-        ),
-    );
+            )));
   }
 }
