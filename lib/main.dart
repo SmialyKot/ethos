@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'add_mood_button.dart';
+import 'mood_slider.dart';
 
 void main() => runApp(Ethos());
 
@@ -48,7 +49,7 @@ class _HomeViewState extends State<HomeView> {
         color: Colors.white60,
       ),
       floatingActionButton: AddMood(
-        onPressed: null,
+        onPressed: () {openMoodSlider(context);},
       ),
     );
   }
