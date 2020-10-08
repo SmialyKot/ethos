@@ -3,16 +3,12 @@ import 'add_mood_button.dart';
 
 void main() => runApp(Ethos());
 
-final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
-
-void openMenu(BuildContext context) {
-  Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+void _openMenu(BuildContext context) {
+  Navigator.of(context)
+      .push(MaterialPageRoute<void>(builder: (BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Menu'),
-      ),
-      body: Text('Nothing yet'),
+      appBar: AppBar(title: Text('Menu')),
+      body: Text('Nothing yet'), //TODO actual menu
     );
   }));
 }
@@ -21,28 +17,39 @@ class Ethos extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        theme: ThemeData(primaryColor: Colors.indigo),
-        home: Scaffold(
-          key: scaffoldKey,
-          appBar: AppBar(
-            title: Text('Ethos'),
-            actions: <Widget>[
-              IconButton(
-                icon: const Icon(Icons.menu),
-                onPressed: () {
-                  openMenu(context);
-                },
-                tooltip: 'Menu',
-              )
-            ],
-          ),
-          body: Container(
-            color: Colors.white60,
-          ),
-          floatingActionButton: AddMood(
-            onPressed: null,
-          ),
-        ));
+      theme: ThemeData(primaryColor: Colors.indigo),
+      home: HomeView(),
+    );
   }
 }
 
+class HomeView extends StatefulWidget {
+  @override
+  _HomeViewState createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Ethos'),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.menu),
+            onPressed: () {
+              _openMenu(context);
+            },
+            tooltip: 'Menu',
+          )
+        ],
+      ),
+      body: Container(
+        color: Colors.white60,
+      ),
+      floatingActionButton: AddMood(
+        onPressed: null,
+      ),
+    );
+  }
+}
