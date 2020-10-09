@@ -30,6 +30,24 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  
+  
+  double _sliderValue = 20.0;
+  
+  void _moodSlider() async {
+    final selectedMood = await showDialog<double>(
+      context: context,
+      builder: (context) => ShowMoodSlider(initialSliderValue: _sliderValue),
+    );
+    if (selectedMood != null)
+      {
+        setState(() {
+          _sliderValue = selectedMood;
+        });
+      }
+  }
+  
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,8 +67,10 @@ class _HomeViewState extends State<HomeView> {
         color: Colors.white60,
       ),
       floatingActionButton: AddMood(
-        onPressed: () {openMoodSlider(context);},
+        onPressed: _moodSlider,
       ),
     );
   }
 }
+
+
