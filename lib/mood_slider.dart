@@ -19,7 +19,8 @@ class _ShowMoodSliderState extends State<ShowMoodSlider> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('$_sliderValue'),
+      insetPadding: EdgeInsets.symmetric(vertical: 200.0, horizontal: 50.0),
+      title: Text('Jaki masz dzisiaj nastrój?'),
       content: Container(
         child: Slider(
           value: _sliderValue,
