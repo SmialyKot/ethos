@@ -32,7 +32,7 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   
   
-  double _sliderValue = 20.0;
+  double _sliderValue = 50.0;
   
   void _moodSlider() async {
     final selectedMood = await showDialog<double>(

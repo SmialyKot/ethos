@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
 
 class ShowMoodSlider extends StatefulWidget {
   final double initialSliderValue;
@@ -16,22 +15,48 @@ class _ShowMoodSliderState extends State<ShowMoodSlider> {
     super.initState();
     _sliderValue = widget.initialSliderValue;
   }
+
+  final separator = const Divider(
+  color: Colors.white,
+  height: 5,
+  thickness: 2,
+  indent: 5,
+  endIndent: 0,
+  );
+
+  final moodList = {
+    0.0 : Text('Fatalny'),
+    25.0 : Text('Słaby'),
+    50.0 : Text('Przeciętny'),
+    75.0 : Text('Dobry'),
+    100.0 : Text('Wyśmienity!'),
+  };
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      insetPadding: EdgeInsets.symmetric(vertical: 200.0, horizontal: 50.0),
+      insetPadding: EdgeInsets.symmetric(vertical: 285.0, horizontal: 50.0),
       title: Text('Jaki masz dzisiaj nastrój?'),
       content: Container(
-        child: Slider(
-          value: _sliderValue,
-          min: 0,
-          max: 100,
-          divisions: 5,
-          onChanged: (value) {
-            setState(() {
-              _sliderValue = value;
-            });
-          },
+        child: Center(
+          child: Column(
+            children: [
+              separator,
+              moodList[_sliderValue],
+              separator,
+              Slider(
+                value: _sliderValue,
+                min: 0,
+                max: 100,
+                divisions: 4,
+                onChanged: (value) {
+                  setState(() {
+                    _sliderValue = value;
+                  });
+                },
+              ),
+            ],
+          ),
         ),
       ),
       actions: <Widget>[
@@ -41,7 +66,7 @@ class _ShowMoodSliderState extends State<ShowMoodSlider> {
             // back a result to the page that opened the dialog
             Navigator.pop(context, _sliderValue);
           },
-          child: Text('DONE'),
+          child: Text('GOTOWE'),
         )
       ],
     );
