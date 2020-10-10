@@ -59,11 +59,13 @@ class DatabaseHelper {
   }
 
   // open the database
+
   _initDatabase() async {
     // The path_provider plugin gets the right directory for Android or iOS.
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, _databaseName);
     // Open the database. Can also add an onUpdate callback parameter.
+    print(documentsDirectory.path);
     return await openDatabase(path,
         version: _databaseVersion,
         onCreate: _onCreate);

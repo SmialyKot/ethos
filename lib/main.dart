@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'add_mood_button.dart';
 import 'mood_slider.dart';
 import 'database_helpers.dart';
+import 'menu.dart';
+
 
 void main() => runApp(Ethos());
 
@@ -10,7 +12,7 @@ void _openMenu(BuildContext context) {
       .push(MaterialPageRoute<void>(builder: (BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Menu')),
-      body: Text('Nothing yet'), //TODO actual menu
+      body: Menu(), //TODO actual menu
     );
   }));
 }
