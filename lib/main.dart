@@ -1,9 +1,10 @@
+import 'package:Ethos/home_page.dart';
 import 'package:flutter/material.dart';
 import 'add_mood_button.dart';
 import 'mood_slider.dart';
 import 'database_helpers.dart';
 import 'menu.dart';
-
+import 'home_page.dart';
 
 void main() => runApp(Ethos());
 
@@ -82,11 +83,8 @@ class _HomeViewState extends State<HomeView> {
         scrollDirection: Axis.horizontal,
         controller: _pageController,
         children: [
-          Container(
-            color: Colors.white60,
-          ),
+          HomePage(),
           Menu(),
-
         ],
         onPageChanged: (num) {
           currentPage = num;
