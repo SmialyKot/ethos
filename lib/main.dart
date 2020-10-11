@@ -7,16 +7,6 @@ import 'menu.dart';
 
 void main() => runApp(Ethos());
 
-void _openMenu(BuildContext context) {
-  Navigator.of(context)
-      .push(MaterialPageRoute<void>(builder: (BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Menu')),
-      body: Menu(), //TODO actual menu
-    );
-  }));
-}
-
 class Ethos extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -35,6 +25,9 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
 
   double _sliderValue = 50.0;
+  final _pageController = PageController(initialPage: 0);
+  var currentPage = 0;
+  final pageMatrix = [1, 0];
 
   final moodList = {
     0.0 : 0,
@@ -73,24 +66,35 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Ethos'),
+        title: Center(
+            child: Text('Ethos')),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.menu),
-            onPressed: () {
-              _openMenu(context);
-            },
             tooltip: 'Menu',
+            onPressed: () {
+              _pageController.animateToPage(pageMatrix[currentPage], duration: const Duration(milliseconds: 400), curve: Curves.easeInOut);
+            },
           )
         ],
       ),
-      body: Container(
-        color: Colors.white60,
+      body: PageView(
+        scrollDirection: Axis.horizontal,
+        controller: _pageController,
+        children: [
+          Container(
+            color: Colors.white60,
+          ),
+          Menu(),
+
+        ],
+        onPageChanged: (num) {
+          currentPage = num;
+        },
       ),
       floatingActionButton: AddMood(
         onPressed: _moodSlider,
-      ),
-    );
+      ));
   }
 }
 

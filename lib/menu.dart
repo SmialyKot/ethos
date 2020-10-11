@@ -17,9 +17,12 @@ class _MenuState extends State<Menu> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    return Scaffold(
+      appBar: AppBar(title: Text('Menu')),
+      body: ListView(
       children: ListTile.divideTiles(
         context: context,
+        color: Colors.white60,
         tiles: [
           ListTile(
             title: Text("Usuń bazę danych"),
@@ -54,6 +57,6 @@ class _MenuState extends State<Menu> {
           ),
         ],
       ).toList(),
-    );
+    ));
   }
 }
