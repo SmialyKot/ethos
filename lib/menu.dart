@@ -8,6 +8,13 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
+
+  _delete() async {
+    DatabaseHelper helper = DatabaseHelper.instance;
+     await helper.deleteDatabase();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -26,8 +33,9 @@ class _MenuState extends State<Menu> {
                 buttons: [
                   DialogButton(
                       child: Text("Kontynuuj"),
-                      onPressed: () { Navigator.pop(context);
-                      //TODO faktyczne usuwanie xd
+                      onPressed: () {
+                        _delete();
+                        Navigator.pop(context);
                       })
                 ]
               ).show();

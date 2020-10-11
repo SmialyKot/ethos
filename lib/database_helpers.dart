@@ -90,6 +90,13 @@ class DatabaseHelper {
     return id;
   }
 
+
+  // Deletes the whole database
+  Future deleteDatabase() async {
+    var dbClient = await database;
+    return await dbClient.rawDelete('DELETE FROM $tableMoods');
+  }
+
   Future<Mood> queryMood(int id) async {
     Database db = await database;
     List<Map> maps = await db.query(tableMoods,
@@ -102,7 +109,4 @@ class DatabaseHelper {
     return null;
   }
 
-// TODO: queryAllMoods()
-// TODO: delete(int id)
-// TODO: update(Mood date)
 }
