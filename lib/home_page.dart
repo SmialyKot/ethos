@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'mood_chart.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -10,11 +11,10 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Colors.white60,
-        child: Center(
-          child: Text('PLACEHOLDER'),
+        child: Container(
+          child: MoodChart(),
         ),
-      ),
-    );
+        ),
+      );
   }
 }

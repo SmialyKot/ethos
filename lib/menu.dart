@@ -22,7 +22,7 @@ class _MenuState extends State<Menu> {
       body: ListView(
       children: ListTile.divideTiles(
         context: context,
-        color: Colors.white60,
+        color: Colors.black45,
         tiles: [
           ListTile(
             title: Text("Usuń bazę danych"),
