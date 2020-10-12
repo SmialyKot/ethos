@@ -41,12 +41,13 @@ class _HomeViewState extends State<HomeView> {
   _saveToDatabase(var value) async {
     Mood mood = Mood();
     DateTime now = new DateTime.now();
-    DateTime date = new DateTime(now.month, now.day, now.hour);
+    DateTime date = new DateTime(now.month, now.day, now.hour, now.minute); // TODO this is not doing what it's supposed to
     mood.date = date.toString();
     mood.mood = value;
     DatabaseHelper helper = DatabaseHelper.instance;
     await helper.insert(mood);
   }
+
 
   void _moodSlider() async {
     final selectedMood = await showDialog<double>(

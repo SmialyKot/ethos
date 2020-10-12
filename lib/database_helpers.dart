@@ -90,6 +90,11 @@ class DatabaseHelper {
     return id;
   }
 
+  Future<int> getCount() async {
+    var dbClient = await database;
+    return Sqflite.firstIntValue(await dbClient.rawQuery('SELECT COUNT(*) FROM $tableMoods'));
+  }
+
 
   // Deletes the whole database
   Future deleteDatabase() async {

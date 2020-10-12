@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'database_helpers.dart';
 
 class MoodChart extends StatefulWidget {
   @override
@@ -12,6 +13,13 @@ class _MoodChartState extends State<MoodChart> {
     const Color(0xff23b6e6),
     const Color(0xff02d39a),
   ];
+
+  // Extract ID of the last row in database
+  _getLastItemNumber() async {
+    DatabaseHelper helper = DatabaseHelper.instance;
+    int temp = await helper.getCount();
+    print(temp);
+  }
 
   @override
   Widget build(BuildContext context) {
