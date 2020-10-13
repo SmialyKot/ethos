@@ -29,6 +29,7 @@ class _HomeViewState extends State<HomeView> {
   final _pageController = PageController(initialPage: 0);
   var currentPage = 0;
   final pageMatrix = [1, 0];
+  DatabaseHelper helper = DatabaseHelper.instance;
 
   final moodList = {
     0.0 : 0,
@@ -38,13 +39,31 @@ class _HomeViewState extends State<HomeView> {
     100.0 : 4,
   };
 
+  Future<int> _getLastItemId() async{
+    int temp = await helper.lastRowID();
+    return temp;
+  }
+  /*
+  _getData() async {
+    int lastId = _getLastItemId();
+    var data = new Map();
+    for(var i = 1; i <= lastId; i++)
+    {
+      Mood mood = await helper.queryMood(i);
+      if (mood != null)
+      {
+        data[mood.date] = mood.mood;
+      }
+    }
+    return data;
+  }*/
+
   _saveToDatabase(var value) async {
     Mood mood = Mood();
     DateTime now = new DateTime.now();
-    DateTime date = new DateTime(now.month, now.day, now.hour, now.minute); // TODO this is not doing what it's supposed to
-    mood.date = date.toString();
+    //DateTime date = new DateTime(now.month, now.day, now.hour, now.minute); // TODO this is not doing what it's supposed to
+    mood.date = now.toString();
     mood.mood = value;
-    DatabaseHelper helper = DatabaseHelper.instance;
     await helper.insert(mood);
   }
 
@@ -61,6 +80,7 @@ class _HomeViewState extends State<HomeView> {
         });
         _saveToDatabase(moodList[_sliderValue]);
       }
+    print(await _getLastItemId());
   }
   
   

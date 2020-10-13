@@ -9,17 +9,14 @@ class MoodChart extends StatefulWidget {
 
 class _MoodChartState extends State<MoodChart> {
 
+  DatabaseHelper helper = DatabaseHelper.instance;
   List<Color> gradientColors = [
     const Color(0xff23b6e6),
     const Color(0xff02d39a),
   ];
 
   // Extract ID of the last row in database
-  _getLastItemNumber() async {
-    DatabaseHelper helper = DatabaseHelper.instance;
-    int temp = await helper.getCount();
-    print(temp);
-  }
+
 
   @override
   Widget build(BuildContext context) {

@@ -90,16 +90,16 @@ class DatabaseHelper {
     return id;
   }
 
-  Future<int> getCount() async {
-    var dbClient = await database;
-    return Sqflite.firstIntValue(await dbClient.rawQuery('SELECT COUNT(*) FROM $tableMoods'));
-  }
-
-
   // Deletes the whole database
   Future deleteDatabase() async {
     var dbClient = await database;
     return await dbClient.rawDelete('DELETE FROM $tableMoods');
+  }
+
+  //
+  Future lastRowID() async {
+    var dbClient = await database;
+    return Sqflite.firstIntValue(await dbClient.rawQuery('SELECT last_insert_rowid()'));
   }
 
   Future<Mood> queryMood(int id) async {
