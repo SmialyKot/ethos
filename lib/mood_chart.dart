@@ -1,6 +1,8 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'database_helpers.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class MoodChart extends StatefulWidget {
   @override
@@ -8,37 +10,40 @@ class MoodChart extends StatefulWidget {
 }
 
 class _MoodChartState extends State<MoodChart> {
-
-  DatabaseHelper helper = DatabaseHelper.instance;
   List<Color> gradientColors = [
     const Color(0xff23b6e6),
     const Color(0xff02d39a),
   ];
 
-  // Extract ID of the last row in database
-
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        AspectRatio(aspectRatio: 1.70,
-          child: Container(
-            decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.zero,),
-            color: Color(0xff232d37)),
-            child: Padding(
-              padding: const EdgeInsets.only(
-                  right: 18.0, left: 0.0, top: 24, bottom: 12),
-              child: LineChart(mainData()),
-            ),
-
-          ),
-        ),
-      ],
-    );
+    return ValueListenableBuilder(
+        valueListenable: Hive.box(dataBoxName).listenable(),
+        builder: (context, box, widget) {
+          var chartData = box.values;
+          print(chartData);// TODO get all data
+          return Stack(
+            children: <Widget>[
+              AspectRatio(
+                aspectRatio: 1.70,
+                child: Container(
+                  decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(
+                        Radius.zero,
+                      ),
+                      color: Color(0xff232d37)),
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        right: 18.0, left: 0.0, top: 24, bottom: 12),
+                    child: LineChart(mainData()),
+                  ),
+                ),
+              ),
+            ],
+          );
+        });
   }
-
 
   LineChartData mainData() {
     return LineChartData(
@@ -63,20 +68,20 @@ class _MoodChartState extends State<MoodChart> {
         bottomTitles: SideTitles(
           showTitles: true,
           reservedSize: 22,
-          getTextStyles: (value) =>
-          const TextStyle(color: Color(0xff68737d),
+          getTextStyles: (value) => const TextStyle(
+              color: Color(0xff68737d),
               fontWeight: FontWeight.bold,
               fontSize: 16),
           getTitles: (value) {
             // TODO get dates from database
             const days = {
-              0 : "Pon",
-              1 : "Wt",
-              2 : "Śr",
-              3 : "Czw",
-              4 : "Pt",
-              5 : "Sob",
-              6 : "Ndz"
+              0: "Pon",
+              1: "Wt",
+              2: "Śr",
+              3: "Czw",
+              4: "Pt",
+              5: "Sob",
+              6: "Ndz"
             };
             return days[value.toInt()];
           },
@@ -84,8 +89,7 @@ class _MoodChartState extends State<MoodChart> {
         ),
         leftTitles: SideTitles(
           showTitles: true,
-          getTextStyles: (value) =>
-          const TextStyle(
+          getTextStyles: (value) => const TextStyle(
             color: Color(0xff67727d),
             fontWeight: FontWeight.bold,
             fontSize: 15,
@@ -109,8 +113,8 @@ class _MoodChartState extends State<MoodChart> {
           margin: 12,
         ),
       ),
-      borderData:
-      FlBorderData(show: true,
+      borderData: FlBorderData(
+          show: true,
           border: Border.all(color: const Color(0xff37434d), width: 1)),
       // AXIS MAX/MIN
       minX: 0,
@@ -139,8 +143,8 @@ class _MoodChartState extends State<MoodChart> {
           ),
           belowBarData: BarAreaData(
             show: true,
-            colors: gradientColors.map((color) => color.withOpacity(0.3))
-                .toList(),
+            colors:
+                gradientColors.map((color) => color.withOpacity(0.3)).toList(),
           ),
         ),
       ],
