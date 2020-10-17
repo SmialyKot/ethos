@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'databaseFiles/database_helpers.dart';
+import 'databaseFiles/mood_report.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -24,13 +25,31 @@ class _MoodChartState extends State<MoodChart> {
     chartDataBox = Hive.box(dataBoxName);
   }
 
+  List<FlSpot>_chartPoints(List<dynamic> data) {
+    List<FlSpot> _points = [];
+    var i = 0;
+    print(data);
+    if(data.length == 0) {
+      _points.add(FlSpot(0.0, 0.0));
+    }
+    else
+      {
+    for(var temp in data){
+      _points.add(FlSpot(i.toDouble(), (temp.mood).toDouble()));
+      if(i == 6) break;
+      i++;
+    }}
+
+    return _points;
+  }
+
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
         valueListenable: chartDataBox.listenable(),
         builder: (context, box, widget) {
           var chartData = box.values;
-          print(chartData.toList());// TODO get all data
+          List<FlSpot> chartPoints = _chartPoints(chartData.toList());// TODO get all data
           return Stack(
             children: <Widget>[
               AspectRatio(
@@ -40,11 +59,11 @@ class _MoodChartState extends State<MoodChart> {
                       borderRadius: BorderRadius.all(
                         Radius.zero,
                       ),
-                      color: Color(0xff232d37)),
+                      color: Colors.white60),
                   child: Padding(
                     padding: const EdgeInsets.only(
                         right: 18.0, left: 0.0, top: 24, bottom: 12),
-                    child: LineChart(mainData()),
+                    child: LineChart(mainData(chartPoints)),
                   ),
                 ),
               ),
@@ -53,7 +72,7 @@ class _MoodChartState extends State<MoodChart> {
         });
   }
 
-  LineChartData mainData() {
+  LineChartData mainData(List<FlSpot> chartPoints) {
     return LineChartData(
       gridData: FlGridData(
         show: true,
@@ -133,15 +152,7 @@ class _MoodChartState extends State<MoodChart> {
       lineBarsData: [
         LineChartBarData(
           // TODO Get data from database
-          spots: [
-            FlSpot(0, 4),
-            FlSpot(1, 2),
-            FlSpot(2, 2),
-            FlSpot(3, 3),
-            FlSpot(4, 2),
-            FlSpot(5, 5),
-            FlSpot(6, 3),
-          ],
+          spots: chartPoints,
           isCurved: true,
           colors: gradientColors,
           barWidth: 5,

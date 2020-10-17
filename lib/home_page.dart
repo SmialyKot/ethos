@@ -50,6 +50,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white60,
       body: FutureBuilder(
         future: Hive.openBox(dataBoxName),
         builder: (context, snapshot) {
@@ -62,7 +63,7 @@ class _HomePageState extends State<HomePage> {
             );
           }
           else
-            return Container();
+            return Center(child: CircularProgressIndicator(),);
         },
       ),
       floatingActionButton: AddMood(
