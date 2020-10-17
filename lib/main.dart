@@ -2,9 +2,7 @@ import 'package:Ethos/home_page.dart';
 import 'package:flutter/material.dart';
 import 'menu.dart';
 import 'home_page.dart';
-import 'database_helpers.dart';
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'databaseFiles/database_helpers.dart';
 
 
 void main() async{

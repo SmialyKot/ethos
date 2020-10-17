@@ -1,6 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'database_helpers.dart';
+import 'databaseFiles/database_helpers.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -10,19 +10,27 @@ class MoodChart extends StatefulWidget {
 }
 
 class _MoodChartState extends State<MoodChart> {
+  Box chartDataBox;
+
   List<Color> gradientColors = [
     const Color(0xff23b6e6),
     const Color(0xff02d39a),
   ];
 
+  @override
+  void initState(){
+    super.initState();
+    Hive.openBox(dataBoxName);
+    chartDataBox = Hive.box(dataBoxName);
+  }
 
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-        valueListenable: Hive.box(dataBoxName).listenable(),
+        valueListenable: chartDataBox.listenable(),
         builder: (context, box, widget) {
           var chartData = box.values;
-          print(chartData);// TODO get all data
+          print(chartData.toList());// TODO get all data
           return Stack(
             children: <Widget>[
               AspectRatio(

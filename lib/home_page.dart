@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'mood_chart.dart';
 import 'add_mood_button.dart';
-import 'database_helpers.dart';
+import 'databaseFiles/database_helpers.dart';
 import 'package:intl/intl.dart';
 import 'mood_slider.dart';
+import 'package:hive/hive.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -27,7 +28,7 @@ class _HomePageState extends State<HomePage> {
     final DateTime now = DateTime.now();
     final DateFormat formatter = DateFormat('yyyy-MM-dd-Hm');
     final String currDate = formatter.format(now);
-    addData([currDate, value]);
+    addData(currDate, value, []);
   }
 
   
@@ -49,11 +50,21 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: Container(
-          child: MoodChart(),
-        ),
-        ),
+      body: FutureBuilder(
+        future: Hive.openBox(dataBoxName),
+        builder: (context, snapshot) {
+          if(snapshot.connectionState == ConnectionState.done) {
+            if(snapshot.hasError){
+              return Container();
+            }
+            return Container(
+              child: MoodChart(),
+            );
+          }
+          else
+            return Container();
+        },
+      ),
       floatingActionButton: AddMood(
         onPressed: _moodSlider,
       ),
