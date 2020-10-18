@@ -8,7 +8,7 @@ class MoodReport extends HiveObject{
   String date;
 
   @HiveField(1)
-  int mood;
+  double mood;
 
   @HiveField(2)
   List<int> reasons;

@@ -16,17 +16,17 @@ class _HomePageState extends State<HomePage> {
   double _sliderValue = 50.0;
 
   final moodList = {
-    0.0 : 1,
-    25.0 : 2,
-    50.0 : 3,
-    75.0 : 4,
-    100.0 : 5,
+    0.0 : 1.0,
+    25.0 : 2.0,
+    50.0 : 3.0,
+    75.0 : 4.0,
+    100.0 : 5.0,
   };
 
 
-  _saveToDatabase(int value){
+  _saveToDatabase(double value){
     final DateTime now = DateTime.now();
-    final DateFormat formatter = DateFormat('yyyy-MM-dd H:m');
+    final DateFormat formatter = DateFormat('yyyy-MM-dd hh:mm');
     final String currDate = formatter.format(now);
     addData(currDate, value, []);
   }

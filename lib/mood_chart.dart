@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'databaseFiles/database_helpers.dart';
@@ -14,11 +16,21 @@ class MoodChart extends StatefulWidget {
 class _MoodChartState extends State<MoodChart> {
   Box chartDataBox;
   bool dataSpan = false;
-  DateFormat parser = DateFormat('yyyy-MM-dd H:m');
+  DateFormat parser = DateFormat('yyyy-MM-dd hh:mm');
   List<Color> gradientColors = [
     const Color(0xff23b6e6),
     const Color(0xff02d39a),
   ];
+
+  final weekDays = {
+    0 : "Pn",
+    1 : "Wt",
+    2 : "Śr",
+    3 : "Czw",
+    4 : "Pt",
+    5 : "Sb",
+    6 : "Nd",
+  };
 
   @override
   void initState(){
@@ -47,13 +59,19 @@ class _MoodChartState extends State<MoodChart> {
     return _points;
   }*/
   List _chartPoints(List<dynamic> data, {int days=7}) {
+
     int daysDiff(var date) {
       return parser.parse(date).difference(DateTime.now()).inDays;
     }
 
+    int _max = 0;
+
+
     for(var i = data.length-1; i > 0; i--) {
       var temp = data[i];
-      if(daysDiff(temp.date) > days)
+      var difference = daysDiff(temp.date);
+      _max = max(difference, _max);
+      if( difference > days)
         {
           data.removeRange(0, i);
           break;
@@ -64,7 +82,22 @@ class _MoodChartState extends State<MoodChart> {
       return[{3 : "Za mało danych!"}, [FlSpot(0.0, 0.0),]];
     }
 
-    return [];
+
+    var OX = {};
+    List<FlSpot> moodValues = [];
+    // TODO proper date adjustment system
+    moodValues.add(FlSpot(0.0, (data[0]).mood));
+    OX[0] = weekDays[(parser.parse((data[0].date))).weekday - 1];
+    OX[6] = weekDays[(parser.parse((data[data.length-1].date))).weekday - 1];
+
+    double placementPivot = 6/data.length;
+    for(var i = 1; i < data.length - 1; i++){
+      var temp = data[i];
+      moodValues.add(FlSpot(i * placementPivot, temp.mood));
+    }
+    moodValues.add(FlSpot(6.0, (data[data.length-1]).mood));
+
+    return [OX, moodValues];
   }
 
   @override
@@ -127,8 +160,7 @@ class _MoodChartState extends State<MoodChart> {
               fontWeight: FontWeight.bold,
               fontSize: 16),
           getTitles: (value) {
-            // TODO get dates from database
-            return days[value.toInt()];
+            return days[value.toInt()]; // <----------------------------  DAYS
           },
           margin: 8,
         ),

@@ -18,7 +18,7 @@ class MoodReportAdapter extends TypeAdapter<MoodReport> {
     };
     return MoodReport()
       ..date = fields[0] as String
-      ..mood = fields[1] as int
+      ..mood = fields[1] as double
       ..reasons = (fields[2] as List)?.cast<int>();
   }
 
