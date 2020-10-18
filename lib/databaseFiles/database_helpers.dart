@@ -25,3 +25,4 @@ void deleteDatabase() async {
   final chartData = Hive.box(dataBoxName);
   await chartData.deleteAll(chartData.keys);
 }
+

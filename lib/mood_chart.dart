@@ -4,6 +4,7 @@ import 'databaseFiles/database_helpers.dart';
 import 'databaseFiles/mood_report.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:intl/intl.dart';
 
 class MoodChart extends StatefulWidget {
   @override
@@ -12,7 +13,8 @@ class MoodChart extends StatefulWidget {
 
 class _MoodChartState extends State<MoodChart> {
   Box chartDataBox;
-
+  bool dataSpan = false;
+  DateFormat parser = DateFormat('yyyy-MM-dd H:m');
   List<Color> gradientColors = [
     const Color(0xff23b6e6),
     const Color(0xff02d39a),
@@ -25,7 +27,8 @@ class _MoodChartState extends State<MoodChart> {
     chartDataBox = Hive.box(dataBoxName);
   }
 
-  List<FlSpot>_chartPoints(List<dynamic> data) {
+  /*
+  List<FlSpot>_chartPoints(List<dynamic> data, {int days = 7}) {
     List<FlSpot> _points = [];
     var i = 0;
     print(data);
@@ -35,12 +38,33 @@ class _MoodChartState extends State<MoodChart> {
     else
       {
     for(var temp in data){
+      print(DateFormat('yyyy-MM-dd H:m').parse(temp.date));
       _points.add(FlSpot(i.toDouble(), (temp.mood).toDouble()));
       if(i == 6) break;
       i++;
     }}
 
     return _points;
+  }*/
+  List _chartPoints(List<dynamic> data, {int days=7}) {
+    int daysDiff(var date) {
+      return parser.parse(date).difference(DateTime.now()).inDays;
+    }
+
+    for(var i = data.length-1; i > 0; i--) {
+      var temp = data[i];
+      if(daysDiff(temp.date) > days)
+        {
+          data.removeRange(0, i);
+          break;
+        }
+    }
+    int numberOfPoints = data.length;
+    if(numberOfPoints <= 1){
+      return[{3 : "Za mało danych!"}, [FlSpot(0.0, 0.0),]];
+    }
+
+    return [];
   }
 
   @override
@@ -49,7 +73,10 @@ class _MoodChartState extends State<MoodChart> {
         valueListenable: chartDataBox.listenable(),
         builder: (context, box, widget) {
           var chartData = box.values;
-          List<FlSpot> chartPoints = _chartPoints(chartData.toList());// TODO get all data
+          //List<FlSpot> chartPoints; //_chartPoints(chartData.toList());// TODO get all data
+          chartData = _chartPoints(chartData.toList());
+          var OX = chartData[0];
+          List<FlSpot> chartPoints = chartData[1];
           return Stack(
             children: <Widget>[
               AspectRatio(
@@ -59,11 +86,11 @@ class _MoodChartState extends State<MoodChart> {
                       borderRadius: BorderRadius.all(
                         Radius.zero,
                       ),
-                      color: Colors.white60),
+                      color: Color(0xff232d37)),
                   child: Padding(
                     padding: const EdgeInsets.only(
                         right: 18.0, left: 0.0, top: 24, bottom: 12),
-                    child: LineChart(mainData(chartPoints)),
+                    child: LineChart(mainData(chartPoints, OX)),
                   ),
                 ),
               ),
@@ -72,7 +99,7 @@ class _MoodChartState extends State<MoodChart> {
         });
   }
 
-  LineChartData mainData(List<FlSpot> chartPoints) {
+  LineChartData mainData(List<FlSpot> chartPoints, Map days) {
     return LineChartData(
       gridData: FlGridData(
         show: true,
@@ -101,15 +128,6 @@ class _MoodChartState extends State<MoodChart> {
               fontSize: 16),
           getTitles: (value) {
             // TODO get dates from database
-            const days = {
-              0: "Pon",
-              1: "Wt",
-              2: "Śr",
-              3: "Czw",
-              4: "Pt",
-              5: "Sob",
-              6: "Ndz"
-            };
             return days[value.toInt()];
           },
           margin: 8,
