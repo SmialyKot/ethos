@@ -5,7 +5,7 @@ import 'home_page.dart';
 import 'databaseFiles/database_helpers.dart';
 
 
-void main() async{
+void main() async{ // TODO splash screen to load assets?
   initHive();
   runApp(Ethos());
 }

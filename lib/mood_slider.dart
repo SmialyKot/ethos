@@ -24,14 +24,14 @@ class _ShowMoodSliderState extends State<ShowMoodSlider> {
   endIndent: 0,
   );
 
-  final moodList = {
+  final moodList = { // TODO custom icons?
     0.0 : Text('Fatalny'),
     1.0 : Text('Słaby'),
     2.0 : Text('Przeciętny'),
     3.0 : Text('Dobry'),
     4.0 : Text('Wyśmienity!'),
   };
-
+  // TODO implement reasons
   @override
   Widget build(BuildContext context) {
     return AlertDialog(

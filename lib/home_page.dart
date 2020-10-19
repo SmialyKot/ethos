@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> {
         builder: (context, snapshot) {
           if(snapshot.connectionState == ConnectionState.done) {
             if(snapshot.hasError){
-              return Container();
+              return Center(child: CircularProgressIndicator());
             }
             return Container(
               child: MoodChart(),

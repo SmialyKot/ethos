@@ -37,7 +37,7 @@ class _MoodChartState extends State<MoodChart> {
   }
 
 
-  List _chartPoints(List<dynamic> data, {int days=7}) {
+  List _chartPoints(List<dynamic> data, {int days=7}) { // TODO room for improvements
     // Returns difference in days between dates
     int daysDiff(var date) {
       return parser.parse(date).difference(DateTime.now()).inDays;
@@ -96,7 +96,7 @@ class _MoodChartState extends State<MoodChart> {
       double result = (temp.hour * 60 * 60 + temp.minute * 60 + temp.second).toDouble();
       return result;
     }
-
+    // TODO chart beginning with a point?
     List<FlSpot> moodValues = [];
     const double secondsInDay = 86400;
 
@@ -114,7 +114,6 @@ class _MoodChartState extends State<MoodChart> {
         valueListenable: chartDataBox.listenable(),
         builder: (context, box, widget) {
           var chartData = box.values;
-          //List<FlSpot> chartPoints; //_chartPoints(chartData.toList());// TODO get all data
           chartData = _chartPoints(chartData.toList());
           var OX = chartData[0];
           List<FlSpot> chartPoints = chartData[1];
