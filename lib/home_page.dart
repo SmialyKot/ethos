@@ -13,16 +13,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  double _sliderValue = 50.0;
-
-  final moodList = {
-    0.0 : 1.0,
-    25.0 : 2.0,
-    50.0 : 3.0,
-    75.0 : 4.0,
-    100.0 : 5.0,
-  };
-
+  double _sliderValue = 2;
 
   _saveToDatabase(double value){
     final DateTime now = DateTime.now().toLocal();
@@ -31,7 +22,7 @@ class _HomePageState extends State<HomePage> {
     addData(currDate, value, []);
   }
 
-  
+
   void _moodSlider() async {
     final selectedMood = await showDialog<double>(
       context: context,
@@ -42,7 +33,7 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         _sliderValue = selectedMood;
       });
-      _saveToDatabase(moodList[_sliderValue]);
+      _saveToDatabase(_sliderValue);
     }
   }
 

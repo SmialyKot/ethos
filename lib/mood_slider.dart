@@ -26,10 +26,10 @@ class _ShowMoodSliderState extends State<ShowMoodSlider> {
 
   final moodList = {
     0.0 : Text('Fatalny'),
-    25.0 : Text('Słaby'),
-    50.0 : Text('Przeciętny'),
-    75.0 : Text('Dobry'),
-    100.0 : Text('Wyśmienity!'),
+    1.0 : Text('Słaby'),
+    2.0 : Text('Przeciętny'),
+    3.0 : Text('Dobry'),
+    4.0 : Text('Wyśmienity!'),
   };
 
   @override
@@ -47,7 +47,7 @@ class _ShowMoodSliderState extends State<ShowMoodSlider> {
               Slider(
                 value: _sliderValue,
                 min: 0,
-                max: 100,
+                max: 4,
                 divisions: 4,
                 onChanged: (value) {
                   setState(() {
