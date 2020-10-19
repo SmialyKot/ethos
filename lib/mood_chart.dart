@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'databaseFiles/database_helpers.dart';
@@ -16,7 +14,7 @@ class MoodChart extends StatefulWidget {
 class _MoodChartState extends State<MoodChart> {
   Box chartDataBox;
   bool dataSpan = false;
-  DateFormat parser = DateFormat('yyyy-MM-dd hh:mm');
+  DateFormat parser = DateFormat('yyyy-MM-dd hh:mm:ss');
   List<Color> gradientColors = [
     const Color(0xff23b6e6),
     const Color(0xff02d39a),
@@ -39,38 +37,44 @@ class _MoodChartState extends State<MoodChart> {
     chartDataBox = Hive.box(dataBoxName);
   }
 
-  /*
-  List<FlSpot>_chartPoints(List<dynamic> data, {int days = 7}) {
-    List<FlSpot> _points = [];
-    var i = 0;
-    print(data);
-    if(data.length == 0) {
-      _points.add(FlSpot(0.0, 0.0));
-    }
-    else
-      {
-    for(var temp in data){
-      print(DateFormat('yyyy-MM-dd H:m').parse(temp.date));
-      _points.add(FlSpot(i.toDouble(), (temp.mood).toDouble()));
-      if(i == 6) break;
-      i++;
-    }}
 
-    return _points;
-  }*/
   List _chartPoints(List<dynamic> data, {int days=7}) {
-
+    // Returns difference in days between dates
     int daysDiff(var date) {
       return parser.parse(date).difference(DateTime.now()).inDays;
     }
-
-    int _max = 0;
+    // Returns day of the week
+    int weekDay(var date){
+      return (parser.parse(date)).weekday - 1;
+    }
+    // Returns dynamic X axis
+    List xAxis (int pivot) {
+      int i = pivot;
+      int j = 0;
+      var keepIndex = {};
+      var result = {};
+      while(i <= 6)
+      {
+        result[j] = weekDays[i];
+        keepIndex[i] = j.toDouble();
+        i++;
+        j++;
+      }
+      i = 0;
+      while(i < pivot)
+      {
+        result[j] = weekDays[i];
+        keepIndex[i] = j.toDouble();
+        j++;
+        i++;
+      }
+      return [result, keepIndex];
+    }
 
 
     for(var i = data.length-1; i > 0; i--) {
       var temp = data[i];
       var difference = daysDiff(temp.date);
-      _max = max(difference, _max);
       if( difference > days)
         {
           data.removeRange(0, i);
@@ -83,20 +87,25 @@ class _MoodChartState extends State<MoodChart> {
     }
 
 
-    var OX = {};
-    List<FlSpot> moodValues = [];
-    // TODO proper date adjustment system
-    moodValues.add(FlSpot(0.0, (data[0]).mood));
-    OX[0] = weekDays[(parser.parse((data[0].date))).weekday - 1];
-    OX[6] = weekDays[(parser.parse((data[data.length-1].date))).weekday - 1];
 
-    double placementPivot = 6/data.length;
-    for(var i = 1; i < data.length - 1; i++){
-      var temp = data[i];
-      moodValues.add(FlSpot(i * placementPivot, temp.mood));
+    var lastDay = weekDay(data[0].date);
+    var response = xAxis(lastDay);
+    var OX = response[0];
+    var indexes = response[1];
+    double getPosition(var date){
+      var temp = parser.parse(date);
+      double result = (temp.hour * 60 * 60 + temp.minute * 60 + temp.second).toDouble();
+      return result;
     }
-    moodValues.add(FlSpot(6.0, (data[data.length-1]).mood));
 
+    List<FlSpot> moodValues = [];
+    const double secondsInDay = 86400;
+
+    for(var i = 0; i < data.length; i++){
+      var temp = data[i];
+      double placementPivot = indexes[weekDay(temp.date)] + (getPosition(temp.date)/(secondsInDay));
+      moodValues.add(FlSpot(placementPivot, temp.mood));
+    }
     return [OX, moodValues];
   }
 

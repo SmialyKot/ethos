@@ -25,8 +25,8 @@ class _HomePageState extends State<HomePage> {
 
 
   _saveToDatabase(double value){
-    final DateTime now = DateTime.now();
-    final DateFormat formatter = DateFormat('yyyy-MM-dd hh:mm');
+    final DateTime now = DateTime.now().toLocal();
+    final DateFormat formatter = DateFormat('yyyy-MM-dd hh:mm:ss');
     final String currDate = formatter.format(now);
     addData(currDate, value, []);
   }
