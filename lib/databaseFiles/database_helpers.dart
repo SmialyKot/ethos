@@ -5,11 +5,11 @@ import 'mood_report.dart';
 const String dataBoxName = "chart_data";
 
 
-void initHive() async {
+Future initHive() async {
   await Hive.initFlutter();
   Hive.registerAdapter(MoodReportAdapter());
   await Hive.openBox(dataBoxName);
-
+  return true;
 }
 
 void addData(DateTime date, double mood, List<int> reasons) {

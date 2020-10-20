@@ -13,18 +13,16 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  double _sliderValue = 2;
-  DateFormat parser = DateFormat('yyyy-MM-dd hh:mm:ss');
-
-
-  _saveToDatabase(double value){
-    final DateTime now = DateTime.now().toLocal();
-    final DateTime currDate = parser.parse(now.toString());
-    addData(currDate, value, []);
-  }
-
 
   void _moodSlider() async {
+    double _sliderValue = 2;
+    DateFormat _parser = DateFormat('yyyy-MM-dd hh:mm:ss');
+    _saveToDatabase(double value){
+      final DateTime now = DateTime.now().toLocal();
+      final DateTime currDate = _parser.parse(now.toString());
+      addData(currDate, value, []);
+    }
+
     final selectedMood = await showDialog<double>(
       context: context,
       builder: (context) => ShowMoodSlider(initialSliderValue: _sliderValue),
@@ -34,7 +32,7 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         _sliderValue = selectedMood;
       });
-      _saveToDatabase(_sliderValue);
+      _saveToDatabase(_sliderValue + 1); // slider<0, 4> +1 => <1, 5>
     }
   }
 

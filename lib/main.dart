@@ -5,8 +5,8 @@ import 'home_page.dart';
 import 'databaseFiles/database_helpers.dart';
 
 
-void main() async{ // TODO splash screen to load assets?
-  initHive();
+void main() async{
+  await initHive();
   runApp(Ethos());
 }
 
@@ -28,22 +28,22 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
 
   final _pageController = PageController(initialPage: 0);
-  var currentPage = 0;
-  final pageMatrix = [1, 0];
+  var _currentPage = 0;
+  final _pageMatrix = [1, 0];
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-            child: Text('Ethos')),
+        centerTitle: true,
+        title: Text('Ethos'),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.menu),
             tooltip: 'Menu',
             onPressed: () {
-              _pageController.animateToPage(pageMatrix[currentPage], duration: const Duration(milliseconds: 400), curve: Curves.easeInOut);
+              _pageController.animateToPage(_pageMatrix[_currentPage], duration: const Duration(milliseconds: 400), curve: Curves.easeInOut);
             },
           )
         ],
@@ -56,7 +56,7 @@ class _HomeViewState extends State<HomeView> {
           Menu(),
         ],
         onPageChanged: (num) {
-          currentPage = num;
+          _currentPage = num;
         },
       ),
       );

@@ -17,16 +17,6 @@ class _MoodChartState extends State<MoodChart> {
     const Color(0xff02d39a),
   ];
 
-  final weekDays = {
-    0 : "Pn",
-    1 : "Wt",
-    2 : "Śr",
-    3 : "Czw",
-    4 : "Pt",
-    5 : "Sb",
-    6 : "Nd",
-  };
-
   @override
   void initState(){
     super.initState();
@@ -36,6 +26,17 @@ class _MoodChartState extends State<MoodChart> {
 
 
   List _chartPoints(List<dynamic> data, {int days=7}) { // TODO room for improvements
+
+    final _weekDays = {
+      0 : "Pn",
+      1 : "Wt",
+      2 : "Śr",
+      3 : "Czw",
+      4 : "Pt",
+      5 : "Sb",
+      6 : "Nd",
+    };
+
     // Returns difference in days between dates
     int daysDiff(var date) {
       return date.difference(DateTime.now()).inDays;
@@ -46,24 +47,17 @@ class _MoodChartState extends State<MoodChart> {
     }
     // Returns dynamic X axis
     List xAxis (int pivot) {
-      int i = pivot;
-      int j = 0;
       var keepIndex = {};
       var result = {};
-      while(i <= 6)
+      for(var i = pivot; i <= 6; i++)
       {
-        result[j] = weekDays[i];
-        keepIndex[i] = j.toDouble();
-        i++;
-        j++;
+        result[i - pivot] = _weekDays[i];
+        keepIndex[i] = (i - pivot).toDouble();
       }
-      i = 0;
-      while(i < pivot)
+      for(var i = 0; i < pivot; i++)
       {
-        result[j] = weekDays[i];
-        keepIndex[i] = j.toDouble();
-        j++;
-        i++;
+        result[i + pivot] = _weekDays[i];
+        keepIndex[i] = (i + pivot).toDouble();
       }
       return [result, keepIndex];
     }
@@ -124,7 +118,8 @@ class _MoodChartState extends State<MoodChart> {
                       borderRadius: BorderRadius.all(
                         Radius.zero,
                       ),
-                      color: Color(0xff232d37)),
+                    // <--------------------------- color
+                  ),
                   child: Padding(
                     padding: const EdgeInsets.only(
                         right: 18.0, left: 0.0, top: 24, bottom: 12),
@@ -144,24 +139,25 @@ class _MoodChartState extends State<MoodChart> {
         drawVerticalLine: true,
         getDrawingHorizontalLine: (value) {
           return FlLine(
-            color: const Color(0xff37434d),
+            color: Colors.indigo,
             strokeWidth: 1,
           );
         },
         getDrawingVerticalLine: (value) {
           return FlLine(
-            color: const Color(0xff37434d),
+            color: Colors.indigo,
             strokeWidth: 2,
           );
         },
       ),
+      // <------------------------------ BOTTOM
       titlesData: FlTitlesData(
         show: true,
         bottomTitles: SideTitles(
           showTitles: true,
           reservedSize: 22,
           getTextStyles: (value) => const TextStyle(
-              color: Color(0xff68737d),
+              color: Colors.indigo,
               fontWeight: FontWeight.bold,
               fontSize: 16),
           getTitles: (value) {
@@ -169,10 +165,11 @@ class _MoodChartState extends State<MoodChart> {
           },
           margin: 8,
         ),
+        // <---------------------------------- LEFT
         leftTitles: SideTitles(
           showTitles: true,
           getTextStyles: (value) => const TextStyle(
-            color: Color(0xff67727d),
+            color: Colors.indigo,
             fontWeight: FontWeight.bold,
             fontSize: 15,
           ),
@@ -194,10 +191,25 @@ class _MoodChartState extends State<MoodChart> {
           reservedSize: 28,
           margin: 12,
         ),
+        // <---------------------------- TOP
+        topTitles: SideTitles(
+          showTitles: true,
+    getTextStyles: (value) => const TextStyle(
+    color: Colors.indigo,
+    fontWeight: FontWeight.bold,
+    fontSize: 16,
+    ),
+          getTitles: (value) {
+            if(value.toInt() == 3)
+              { return "Ostatnie 7 dni";}
+            return '';
+          }
+
+      ),
       ),
       borderData: FlBorderData(
           show: true,
-          border: Border.all(color: const Color(0xff37434d), width: 1)),
+          border: Border.all(color: Colors.indigo, width: 1)),
       // AXIS MAX/MIN
       minX: 0,
       maxX: 6,
@@ -206,7 +218,6 @@ class _MoodChartState extends State<MoodChart> {
 
       lineBarsData: [
         LineChartBarData(
-          // TODO Get data from database
           spots: chartPoints,
           isCurved: true,
           colors: gradientColors,

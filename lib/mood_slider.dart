@@ -24,7 +24,7 @@ class _ShowMoodSliderState extends State<ShowMoodSlider> {
   endIndent: 0,
   );
 
-  final moodList = { // TODO custom icons?
+  final moodList = {
     0.0 : Text('Fatalny'),
     1.0 : Text('Słaby'),
     2.0 : Text('Przeciętny'),
