@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'databaseFiles/database_helpers.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:intl/intl.dart';
 
 class MoodChart extends StatefulWidget {
   @override
@@ -13,7 +12,6 @@ class MoodChart extends StatefulWidget {
 class _MoodChartState extends State<MoodChart> {
   Box chartDataBox;
   bool dataSpan = false;
-  DateFormat parser = DateFormat('yyyy-MM-dd hh:mm:ss');
   List<Color> gradientColors = [
     const Color(0xff23b6e6),
     const Color(0xff02d39a),
@@ -40,11 +38,11 @@ class _MoodChartState extends State<MoodChart> {
   List _chartPoints(List<dynamic> data, {int days=7}) { // TODO room for improvements
     // Returns difference in days between dates
     int daysDiff(var date) {
-      return parser.parse(date).difference(DateTime.now()).inDays;
+      return date.difference(DateTime.now()).inDays;
     }
     // Returns day of the week
     int weekDay(var date){
-      return (parser.parse(date)).weekday - 1;
+      return date.weekday - 1;
     }
     // Returns dynamic X axis
     List xAxis (int pivot) {
@@ -92,7 +90,7 @@ class _MoodChartState extends State<MoodChart> {
     var OX = response[0];
     var indexes = response[1];
     double getPosition(var date){
-      var temp = parser.parse(date);
+      var temp = date;
       double result = (temp.hour * 60 * 60 + temp.minute * 60 + temp.second).toDouble();
       return result;
     }

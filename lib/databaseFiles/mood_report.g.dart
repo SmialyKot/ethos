@@ -17,7 +17,7 @@ class MoodReportAdapter extends TypeAdapter<MoodReport> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return MoodReport()
-      ..date = fields[0] as String
+      ..date = fields[0] as DateTime
       ..mood = fields[1] as double
       ..reasons = (fields[2] as List)?.cast<int>();
   }

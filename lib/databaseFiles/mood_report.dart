@@ -5,7 +5,7 @@ part 'mood_report.g.dart';
 @HiveType(typeId : 1)
 class MoodReport extends HiveObject{
   @HiveField(0)
-  String date;
+  DateTime date;
 
   @HiveField(1)
   double mood;

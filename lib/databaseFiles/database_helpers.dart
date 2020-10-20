@@ -12,7 +12,7 @@ void initHive() async {
 
 }
 
-void addData(String date, double mood, List<int> reasons) {
+void addData(DateTime date, double mood, List<int> reasons) {
   final chartData = Hive.box(dataBoxName);
   var data = MoodReport()
   ..date = date

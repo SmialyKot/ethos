@@ -14,11 +14,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
   double _sliderValue = 2;
+  DateFormat parser = DateFormat('yyyy-MM-dd hh:mm:ss');
+
 
   _saveToDatabase(double value){
     final DateTime now = DateTime.now().toLocal();
-    final DateFormat formatter = DateFormat('yyyy-MM-dd hh:mm:ss');
-    final String currDate = formatter.format(now);
+    final DateTime currDate = parser.parse(now.toString());
     addData(currDate, value, []);
   }
 
@@ -47,7 +48,12 @@ class _HomePageState extends State<HomePage> {
         builder: (context, snapshot) {
           if(snapshot.connectionState == ConnectionState.done) {
             if(snapshot.hasError){
-              return Center(child: CircularProgressIndicator());
+              if(snapshot.error == HiveError) {
+                return Center(child: CircularProgressIndicator());
+              }
+              else{
+                return Center(child: Text(snapshot.error));
+              }
             }
             return Container(
               child: MoodChart(),
