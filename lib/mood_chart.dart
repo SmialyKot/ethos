@@ -56,9 +56,10 @@ class _MoodChartState extends State<MoodChart> {
       }
       for(var i = 0; i < pivot; i++)
       {
-        result[i + pivot] = _weekDays[i];
-        keepIndex[i] = (i + pivot).toDouble();
+        result[7 - pivot + i] = _weekDays[i];
+        keepIndex[i] = (7 - pivot + i).toDouble();
       }
+      print(result);
       return [result, keepIndex];
     }
 
