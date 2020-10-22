@@ -3,6 +3,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'mood_report.dart';
 
 const String dataBoxName = "chart_data";
+final chartData = Hive.box(dataBoxName);
 
 
 Future initHive() async {
@@ -13,7 +14,6 @@ Future initHive() async {
 }
 
 void addData(DateTime date, double mood, List<int> reasons) {
-  final chartData = Hive.box(dataBoxName);
   var data = MoodReport()
   ..date = date
   ..mood = mood
@@ -22,7 +22,10 @@ void addData(DateTime date, double mood, List<int> reasons) {
 }
 
 void deleteDatabase() async {
-  final chartData = Hive.box(dataBoxName);
   await chartData.deleteAll(chartData.keys);
+}
+
+void deleteAtIndex(int index) async {
+  await chartData.deleteAt(index);
 }
 

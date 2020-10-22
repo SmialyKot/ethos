@@ -24,7 +24,7 @@ class _ShowMoodSliderState extends State<ShowMoodSlider> {
   endIndent: 0,
   );
 
-  final moodList = {
+  final _moodList = {
     0.0 : Text('Fatalny'),
     1.0 : Text('Słaby'),
     2.0 : Text('Przeciętny'),
@@ -42,7 +42,7 @@ class _ShowMoodSliderState extends State<ShowMoodSlider> {
           child: Column(
             children: [
               separator,
-              moodList[_sliderValue],
+              _moodList[_sliderValue],
               separator,
               Slider(
                 value: _sliderValue,

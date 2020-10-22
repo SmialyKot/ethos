@@ -1,3 +1,4 @@
+import 'package:Ethos/data_list.dart';
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'databaseFiles/database_helpers.dart';
@@ -38,6 +39,17 @@ class _MenuState extends State<Menu> {
                 ]
               ).show();
 
+            },
+          ),
+          ListTile(
+            title: Text('Dane szczegółowe'),
+            trailing: Icon(Icons.format_line_spacing_rounded),
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return DataList();
+                  }),
+              );
             },
           ),
           ListTile(
