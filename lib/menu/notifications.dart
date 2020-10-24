@@ -20,7 +20,7 @@ class NotificationScheduleState extends State<NotificationSchedule> {
   void initState() {
     super.initState();
     const AndroidInitializationSettings initAndroid =
-        AndroidInitializationSettings('ic_launcher');
+        AndroidInitializationSettings('zen_symbol_48');
     final IOSInitializationSettings initIOS = IOSInitializationSettings();
     final InitializationSettings initSettings = InitializationSettings(
       android: initAndroid,

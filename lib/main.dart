@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'menu/menu.dart';
 import 'home_page.dart';
 import 'databaseFiles/database_helpers.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 
 void main() async{
