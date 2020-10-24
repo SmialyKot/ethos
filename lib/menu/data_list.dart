@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'databaseFiles/database_helpers.dart';
+import '../databaseFiles/database_helpers.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 

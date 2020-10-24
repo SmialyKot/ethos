@@ -1,7 +1,11 @@
-import 'package:Ethos/data_list.dart';
+import 'package:Ethos/menu/data_list.dart';
+import 'package:Ethos/menu/notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-import 'databaseFiles/database_helpers.dart';
+import '../databaseFiles/database_helpers.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+
+
 
 class Menu extends StatefulWidget {
   @override
@@ -9,8 +13,6 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,10 +54,26 @@ class _MenuState extends State<Menu> {
               );
             },
           ),
+          NotificationSchedule(),
           ListTile(
-            title: Text('Dodaj przypomnienia'),
-            trailing: Icon(Icons.calendar_today_outlined),
-            //TODO faktyczne przypomnienia
+            title: Text('Usuń wszystkie przypomnienia'),
+            trailing: Icon(Icons.auto_delete_outlined),
+            onTap: () {
+              Alert(
+                  context: context,
+                  type: AlertType.warning,
+                  title: "Usuwanie przypomnień",
+                  desc: "Uwaga! Potwierdzenie skutkuje usunięciem przypomnień!",
+                  buttons: [
+                    DialogButton(
+                        child: Text("Kontynuuj"),
+                        onPressed: () {
+                          NotificationScheduleState().deleteNotifications();
+                          Navigator.pop(context);
+                        })
+                  ]
+              ).show();
+            },
           ),
           ListTile(
             title: Text('O aplikacji'),

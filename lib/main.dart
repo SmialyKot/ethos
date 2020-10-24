@@ -1,8 +1,9 @@
 import 'package:Ethos/home_page.dart';
 import 'package:flutter/material.dart';
-import 'menu.dart';
+import 'menu/menu.dart';
 import 'home_page.dart';
 import 'databaseFiles/database_helpers.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 
 void main() async{
@@ -30,6 +31,7 @@ class _HomeViewState extends State<HomeView> {
   final _pageController = PageController(initialPage: 0);
   var _currentPage = 0;
   final _pageMatrix = [1, 0];
+
 
 
   @override
@@ -61,6 +63,8 @@ class _HomeViewState extends State<HomeView> {
       ),
       );
   }
+
 }
+
 
 
