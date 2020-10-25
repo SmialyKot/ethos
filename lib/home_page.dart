@@ -17,21 +17,23 @@ class _HomePageState extends State<HomePage> {
 
   _moodSlider() async {
     double _sliderValue = 2;
-    DateFormat _parser = DateFormat('yyyy-MM-dd hh:mm:ss');
+    List _reasons;
+    DateFormat _parser = DateFormat('yyyy-MM-dd HH:mm:ss');
     _saveToDatabase(double value) {
       final DateTime now = DateTime.now().toLocal();
       final DateTime currDate = _parser.parse(now.toString());
-      addData(currDate, value, []);
+      addData(currDate, value, _reasons);
     }
 
-    final selectedMood = await showDialog<double>(
+    final selectedMood = await showDialog<List>(
       context: context,
       builder: (context) => ShowMoodSlider(),
     );
 
-    if (selectedMood != null) {
+    if (selectedMood[0] != null) {
       setState(() {
-        _sliderValue = selectedMood;
+        _sliderValue = selectedMood[0];
+        _reasons = selectedMood[1].cast<int>();
       });
       var boxSize = Hive.box(dataBoxName).length;
       if (boxSize == 0) {

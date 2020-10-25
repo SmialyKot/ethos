@@ -1,4 +1,5 @@
 import 'package:Ethos/home_page.dart';
+import 'package:Ethos/menu/notifications.dart';
 import 'package:flutter/material.dart';
 import 'menu/menu.dart';
 import 'home_page.dart';
@@ -7,6 +8,7 @@ import 'databaseFiles/database_helpers.dart';
 
 void main() async{
   await initHive();
+  NotificationSchedule().init();
   runApp(Ethos());
 }
 
@@ -15,17 +17,14 @@ class Ethos extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(primaryColor: Colors.indigo),
-      home: HomeView(),
+      home: _HomeView(),
     );
   }
 }
 
-class HomeView extends StatefulWidget {
-  @override
-  _HomeViewState createState() => _HomeViewState();
-}
 
-class _HomeViewState extends State<HomeView> {
+
+class _HomeView extends StatelessWidget {
 
   final _pageController = PageController(initialPage: 0);
   var _currentPage = 0;

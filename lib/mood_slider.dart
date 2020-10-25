@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:multiselect_formfield/multiselect_formfield.dart';
 
 class ShowMoodSlider extends StatefulWidget {
   @override
@@ -9,6 +10,7 @@ class ShowMoodSlider extends StatefulWidget {
 class _ShowMoodSliderState extends State<ShowMoodSlider> {
 
   double _sliderValue = 2.0;
+  List _reasons;
 
   final separator = const Divider(
   color: Colors.white,
@@ -29,7 +31,7 @@ class _ShowMoodSliderState extends State<ShowMoodSlider> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      insetPadding: EdgeInsets.symmetric(vertical: 285.0, horizontal: 50.0),
+      insetPadding: EdgeInsets.symmetric(vertical: 200.0, horizontal: 50.0),
       title: Text('Jaki masz dzisiaj nastrój?'),
       content: Container(
         child: Center(
@@ -49,6 +51,52 @@ class _ShowMoodSliderState extends State<ShowMoodSlider> {
                   });
                 },
               ),
+              separator,
+              MultiSelectFormField(
+                autovalidate: false,
+                chipBackGroundColor: Colors.indigo,
+                chipLabelStyle: TextStyle(fontWeight: FontWeight.bold),
+                dialogTextStyle: TextStyle(fontWeight: FontWeight.bold),
+                checkBoxActiveColor: Colors.indigo,
+                checkBoxCheckColor: Colors.white54,
+                dialogShapeBorder: RoundedRectangleBorder(),
+                title: Text('Wybierz przyczynę'),
+                dataSource: [
+                  {
+                    "display": "Praca",
+                    "value": 0,
+                  },
+                  {
+                    "display": "Zdrowie",
+                    "value": 1,
+                  },
+                  {
+                    "display": "Szkoła",
+                    "value": 2,
+                  },
+                  {
+                    "display": "Rodzina/Znajomi",
+                    "value": 3,
+                  },
+                  {
+                    "display": "Wypadek losowy",
+                    "value": 4,
+                  },
+                ],
+                textField: 'display',
+                valueField: 'value',
+                okButtonLabel: 'OK',
+                cancelButtonLabel: 'ANULUJ',
+                hintWidget: Text("...jeśli chcesz"),
+                initialValue: _reasons,
+                onSaved: (value){
+                  if(value == null) return;
+                  setState(() {
+                    _reasons = value;
+                  });
+                },
+
+              )
             ],
           ),
         ),
@@ -56,7 +104,7 @@ class _ShowMoodSliderState extends State<ShowMoodSlider> {
       actions: <Widget>[
         FlatButton(
           onPressed: () {
-            Navigator.pop(context, _sliderValue);
+            Navigator.pop(context, [_sliderValue, _reasons]);
           },
           child: Text('GOTOWE'),
         )

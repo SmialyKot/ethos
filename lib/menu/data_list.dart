@@ -4,15 +4,9 @@ import '../databaseFiles/database_helpers.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 
+class DataList extends StatelessWidget {
 
-class DataList extends StatefulWidget {
-  @override
-  _DataListState createState() => _DataListState();
-}
-
-class _DataListState extends State<DataList> {
-
-  Box stateBox = Hive.box(dataBoxName);
+  final Box stateBox = Hive.box(dataBoxName);
   final _moodList = {
     1.0 : Text('Fatalny nastrój'),
     2.0 : Text('Słaby nastrój'),

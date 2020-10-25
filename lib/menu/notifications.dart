@@ -1,36 +1,25 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
-class NotificationSchedule extends StatefulWidget {
-  @override
-  NotificationScheduleState createState() => NotificationScheduleState();
-}
 
-class NotificationScheduleState extends State<NotificationSchedule> {
-
+class NotificationSchedule{
 
   FlutterLocalNotificationsPlugin localNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
-
-  @override
-  void initState() {
-    super.initState();
-    const AndroidInitializationSettings initAndroid =
+  FlutterLocalNotificationsPlugin();
+  void init(){
+  final AndroidInitializationSettings initAndroid =
         AndroidInitializationSettings('zen_symbol_48');
-    final IOSInitializationSettings initIOS = IOSInitializationSettings();
-    final InitializationSettings initSettings = InitializationSettings(
+  final IOSInitializationSettings initIOS = IOSInitializationSettings();
+  final InitializationSettings initSettings = InitializationSettings(
       android: initAndroid,
-      iOS: initIOS,
-    );
-    tz.initializeTimeZones();
-    localNotificationsPlugin.initialize(
-      initSettings,
-    );
+      iOS: initIOS,);
+  tz.initializeTimeZones();
+  localNotificationsPlugin.initialize(initSettings,);
   }
+
+
 
   void deleteNotifications() async {
     await localNotificationsPlugin.cancelAll();
@@ -39,9 +28,9 @@ class NotificationScheduleState extends State<NotificationSchedule> {
   Future setNotification(
       DateTime datetime, String title, String text, int hashcode) async {
     var androidChannel = AndroidNotificationDetails(
-      'channel-id',
-      'channel-name',
-      'channel-description',
+      '0',
+      'Przypomnienia',
+      'Wyświetlanie zaplanowanych przypomnień',
       importance: Importance.max,
       priority: Priority.max,
     );
@@ -72,24 +61,5 @@ class NotificationScheduleState extends State<NotificationSchedule> {
       scheduledDate = scheduledDate.add(const Duration(days: 1));
     }
     return scheduledDate;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      title: Text('Dodaj przypomnienia'),
-      trailing: Icon(Icons.calendar_today_outlined),
-      onTap: () {
-        DatePicker.showTimePicker(
-          context,
-          showTitleActions: true,
-          onConfirm: (date) {
-            setNotification(date, "Hej, tutaj Ethos!", "Nie zapomnij dodać jak się czujesz", 0);
-          },
-          currentTime: DateTime.now(),
-          locale: LocaleType.pl,
-        );
-      },
-    );
   }
 }

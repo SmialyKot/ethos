@@ -4,15 +4,11 @@ import 'databaseFiles/database_helpers.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-class MoodChart extends StatefulWidget {
-  @override
-  _MoodChartState createState() => _MoodChartState();
-}
 
-class _MoodChartState extends State<MoodChart> {
-  Box chartDataBox = Hive.box(dataBoxName);
-  bool dataSpan = false;
-  List<Color> gradientColors = [
+class MoodChart extends StatelessWidget {
+
+  final Box chartDataBox = Hive.box(dataBoxName);
+  final List<Color> gradientColors = [
     const Color(0xff23b6e6),
     const Color(0xff02d39a),
   ];
@@ -32,7 +28,7 @@ class _MoodChartState extends State<MoodChart> {
 
     // Returns difference in days between dates
     int daysDiff(var date) {
-      return date.difference(DateTime.now()).inDays;
+      return date.difference(DateTime.now().toLocal()).inDays;
     }
     // Returns day of the week
     int weekDay(var date){

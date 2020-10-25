@@ -37,7 +37,9 @@ dependencies:
   flutter_local_notifications: ^3.0.0+1
   timezone: ^0.5.9
   flutter_native_timezone: ^1.0.4
-  flutter_datetime_picker: ^1.4.0
+  multiselect_formfield: ^0.1.4
+
+
 
 dev_dependencies:
   flutter_test:
