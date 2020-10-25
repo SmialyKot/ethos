@@ -14,6 +14,8 @@ https://pub.dev/packages/hive
 Plik .apk do instalacji na urządzeniu z systemem Android:
 https://drive.google.com/file/d/1Pq2xT3pu1lYW_6VuGLNrBHigNqTLQ30t/view?usp=sharing
 
+Dane należy wprowadzać nie częściej niż co 3 godziny, zaleca się robić to dwa razy dziennie, rano i wieczorem, korzystając z przycisku w prawym dolnym rogu ekranu głównego aplikacji.
+
 Założenia projektu: stworzenie aplikacji będącej formą dziennika samopoczucia który tworzy wizualizacje
 danych w formie wykresu, podsumowuje dane dla użytkownika.
 
