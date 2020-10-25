@@ -1,7 +1,7 @@
 import 'package:Ethos/menu/notifications.dart';
 import 'package:flutter/material.dart';
 
-
+// Widget wybierania godziny
 class TimePicker extends StatelessWidget {
 
   Future<Null>selectTime(BuildContext context) async{

@@ -7,6 +7,8 @@ class ShowMoodSlider extends StatefulWidget {
   _ShowMoodSliderState createState() => _ShowMoodSliderState();
 }
 
+
+// Okno dodawania nastroju
 class _ShowMoodSliderState extends State<ShowMoodSlider> {
 
   double _sliderValue = 2.0;

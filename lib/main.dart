@@ -7,8 +7,11 @@ import 'databaseFiles/database_helpers.dart';
 
 
 void main() async{
+  // Inicjalizacja bazy danych
   await initHive();
+  // Usługa notyfikacji
   NotificationSchedule().init();
+  // Aplikacja
   runApp(Ethos());
 }
 
@@ -23,7 +26,7 @@ class Ethos extends StatelessWidget {
 }
 
 
-
+// Widget "matka"
 class _HomeView extends StatelessWidget {
 
   final _pageController = PageController(initialPage: 0);

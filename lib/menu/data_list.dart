@@ -4,6 +4,8 @@ import '../databaseFiles/database_helpers.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 
+
+// Rozbudowany widok danych
 class DataList extends StatelessWidget {
 
   final Box stateBox = Hive.box(dataBoxName);

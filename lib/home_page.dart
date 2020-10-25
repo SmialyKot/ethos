@@ -8,6 +8,7 @@ import 'package:hive/hive.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 
+// Strona główna
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -17,7 +18,7 @@ class _HomePageState extends State<HomePage> {
 
   _moodSlider() async {
     double _sliderValue = 2;
-    List _reasons;
+    List<int> _reasons;
     DateFormat _parser = DateFormat('yyyy-MM-dd HH:mm:ss');
     _saveToDatabase(double value) {
       final DateTime now = DateTime.now().toLocal();
@@ -33,7 +34,10 @@ class _HomePageState extends State<HomePage> {
     if (selectedMood[0] != null) {
       setState(() {
         _sliderValue = selectedMood[0];
-        _reasons = selectedMood[1].cast<int>();
+        if(selectedMood[1] != null){
+          _reasons = selectedMood[1].cast<int>();
+        }
+        else _reasons = [];
       });
       var boxSize = Hive.box(dataBoxName).length;
       if (boxSize == 0) {
@@ -61,6 +65,8 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+
+  // Strona główna
   @override
   Widget build(BuildContext context) {
     return Scaffold(

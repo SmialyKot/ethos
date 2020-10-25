@@ -1,16 +1,25 @@
-# ethos
+# Ethos
 
-A new Flutter application.
+Prywatny dziennik samopoczucia
 
-## Getting Started
+## Prototyp aplikacji na hackheroes.pl
 
-This project is a starting point for a Flutter application.
+Ethos jest aplikacją tworzoną we Flutterze:
+https://flutter.dev/
+Języku programowania Dart:
+https://dart.dev/
+I bazie danych NoSQL, Hive:
+https://pub.dev/packages/hive
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+Założenia projektu: stworzenie aplikacji będącej formą dziennika samopoczucia który tworzy wizualizacje
+danych w formie wykresu, podsumowuje dane dla użytkownika.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Do skompilowania kodu potrzebne będzie:
+- Android Studio,
+- Plugin Flutter do Android Studio,
+- Plugin Dart do Android Studio.
+
+
+Flutter pozwala na jednoczesne tworzenie aplikacji na iOS, jednakże obecnie nie jest wspierany.
+Aplikacja była testowana wyłącznie na Androidzie 10.

@@ -5,6 +5,7 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 
+// Wykres nastroju
 class MoodChart extends StatelessWidget {
 
   final Box chartDataBox = Hive.box(dataBoxName);

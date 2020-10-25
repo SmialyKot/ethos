@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
+// Przycisk do dodawania nastroju
 class AddMood extends StatelessWidget {
   AddMood({@required this.onPressed});
 

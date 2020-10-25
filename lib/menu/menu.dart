@@ -6,6 +6,8 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import '../databaseFiles/database_helpers.dart';
 
 
+
+// Menu aplikacji
 class Menu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
