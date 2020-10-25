@@ -72,7 +72,23 @@ class Menu extends StatelessWidget {
           ListTile(
             title: const Text('O aplikacji'),
             trailing: const Icon(Icons.info_outline_rounded),
-            //TODO faktyczne informacje
+            onTap: () {
+              Alert(
+                  context: context,
+                  type: AlertType.none,
+                  title: "Ethos",
+                  desc: "Wykonał: Miłosz Kałucki\n"
+                      "Ikony: www.icons8.com\n"
+                      "#WorkInProgress",
+                  buttons: [
+                    DialogButton(
+                        child: const Text("Powrót"),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        })
+                  ]
+              ).show();
+            },
           ),
         ],
       ).toList(),

@@ -9,7 +9,8 @@ class TimePicker extends StatelessWidget {
     TimeOfDay picked = await showTimePicker(context: context, initialTime: _time, );
     if(picked != null){
       final now = new DateTime.now();
-      NotificationSchedule().setNotification(DateTime(now.year, now.month, now.day, picked.hour, picked.minute), "Hej, tutaj Ethos!", "Nie zapomnij dodać nastroju w aplikacji!", 0);
+      NotificationSchedule().setNotification(DateTime(now.year, now.month, now.day, picked.hour, picked.minute),
+          "Hej, tutaj Ethos!", "Nie zapomnij dodać nastroju w aplikacji!", 0);
     }
   }
 

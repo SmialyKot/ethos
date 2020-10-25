@@ -87,7 +87,7 @@ class _ShowMoodSliderState extends State<ShowMoodSlider> {
                 valueField: 'value',
                 okButtonLabel: 'OK',
                 cancelButtonLabel: 'ANULUJ',
-                hintWidget: Text("...jeśli chcesz"),
+                hintWidget: const Text("...jeśli chcesz"),
                 initialValue: _reasons,
                 onSaved: (value){
                   if(value == null) return;
@@ -106,7 +106,7 @@ class _ShowMoodSliderState extends State<ShowMoodSlider> {
           onPressed: () {
             Navigator.pop(context, [_sliderValue, _reasons]);
           },
-          child: Text('GOTOWE'),
+          child: const Text('GOTOWE'),
         )
       ],
     );
