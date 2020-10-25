@@ -7,12 +7,14 @@ import 'mood_slider.dart';
 import 'package:hive/hive.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+
   _moodSlider() async {
     double _sliderValue = 2;
     DateFormat _parser = DateFormat('yyyy-MM-dd hh:mm:ss');
@@ -24,8 +26,9 @@ class _HomePageState extends State<HomePage> {
 
     final selectedMood = await showDialog<double>(
       context: context,
-      builder: (context) => ShowMoodSlider(initialSliderValue: _sliderValue),
+      builder: (context) => ShowMoodSlider(),
     );
+
     if (selectedMood != null) {
       setState(() {
         _sliderValue = selectedMood;
@@ -60,26 +63,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white60,
-      body: FutureBuilder(
-        future: Hive.openBox(dataBoxName),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.hasError) {
-              if (snapshot.error == HiveError) {
-                return Center(child: CircularProgressIndicator());
-              } else {
-                return Center(child: Text(snapshot.error));
-              }
-            }
-            return Container(
-              child: MoodChart(),
-            );
-          } else
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-        },
-      ),
+      body: MoodChart(),
       floatingActionButton: AddMood(
         onPressed: _moodSlider,
       ),

@@ -10,19 +10,12 @@ class MoodChart extends StatefulWidget {
 }
 
 class _MoodChartState extends State<MoodChart> {
-  Box chartDataBox;
+  Box chartDataBox = Hive.box(dataBoxName);
   bool dataSpan = false;
   List<Color> gradientColors = [
     const Color(0xff23b6e6),
     const Color(0xff02d39a),
   ];
-
-  @override
-  void initState(){
-    super.initState();
-    Hive.openBox(dataBoxName);
-    chartDataBox = Hive.box(dataBoxName);
-  }
 
 
   List _chartPoints(List<dynamic> data, {int days=7}) { // TODO room for improvements
@@ -100,6 +93,7 @@ class _MoodChartState extends State<MoodChart> {
     return [OX, moodValues];
   }
 
+  // TODO Computation on different thread/isolate
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
@@ -115,7 +109,7 @@ class _MoodChartState extends State<MoodChart> {
                 aspectRatio: 1.70,
                 child: Container(
                   decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(
+                      borderRadius: const BorderRadius.all(
                         Radius.zero,
                       ),
                     // <--------------------------- color
@@ -201,7 +195,7 @@ class _MoodChartState extends State<MoodChart> {
     ),
           getTitles: (value) {
             if(value.toInt() == 3)
-              { return "Ostatnie 7 dni";}
+              { return "Widok: 7 dni";}
             return '';
           }
 

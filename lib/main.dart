@@ -44,7 +44,7 @@ class _HomeViewState extends State<HomeView> {
             icon: const Icon(Icons.menu),
             tooltip: 'Menu',
             onPressed: () {
-              _pageController.animateToPage(_pageMatrix[_currentPage], duration: const Duration(milliseconds: 400), curve: Curves.easeInOut);
+              _pageController.animateToPage(_pageMatrix[_currentPage], duration: const Duration(milliseconds: 550), curve: Curves.easeInOut);
             },
           )
         ],

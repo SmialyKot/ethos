@@ -64,9 +64,10 @@ class NotificationScheduleState extends State<NotificationSchedule> {
   }
 
   tz.TZDateTime _nextInstanceOfDate(DateTime selectedDate) {
-    final tz.TZDateTime now = tz.TZDateTime.from(selectedDate,tz.local);
+    final tz.TZDateTime userDate = tz.TZDateTime.from(selectedDate,tz.local);
+    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
     tz.TZDateTime scheduledDate =
-        tz.TZDateTime(tz.local, now.year, now.month, now.day, now.hour, now.minute, now.second);
+        tz.TZDateTime(tz.local, userDate.year, userDate.month, userDate.day, userDate.hour, userDate.minute, userDate.second);
     if (scheduledDate.isBefore(now)) {
       scheduledDate = scheduledDate.add(const Duration(days: 1));
     }

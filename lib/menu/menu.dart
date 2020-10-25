@@ -5,12 +5,7 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import '../databaseFiles/database_helpers.dart';
 
 
-class Menu extends StatefulWidget {
-  @override
-  _MenuState createState() => _MenuState();
-}
-
-class _MenuState extends State<Menu> {
+class Menu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

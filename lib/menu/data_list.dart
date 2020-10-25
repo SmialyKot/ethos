@@ -12,7 +12,7 @@ class DataList extends StatefulWidget {
 
 class _DataListState extends State<DataList> {
 
-  Box stateBox;
+  Box stateBox = Hive.box(dataBoxName);
   final _moodList = {
     1.0 : Text('Fatalny nastrój'),
     2.0 : Text('Słaby nastrój'),
@@ -20,14 +20,7 @@ class _DataListState extends State<DataList> {
     4.0 : Text('Dobry nastrój'),
     5.0 : Text('Wyśmienity nastrój!'),
   };
-
-  @override
-  void initState(){
-    super.initState();
-    Hive.openBox(dataBoxName);
-    stateBox = Hive.box(dataBoxName);
-  }
-
+  
 
   @override
   Widget build(BuildContext context) {
@@ -35,11 +28,7 @@ class _DataListState extends State<DataList> {
       appBar: AppBar(
         title: Text("Dane szczegółowe"),
       ),
-      body: FutureBuilder(
-          future: Hive.openBox(dataBoxName),
-          builder: (context, snapshot){
-            if(snapshot.connectionState == ConnectionState.done) {
-              return ValueListenableBuilder(
+      body: ValueListenableBuilder(
                 valueListenable: stateBox.listenable(),
                 builder: (context, box, _) {
                   return ListView.separated(
@@ -69,11 +58,8 @@ class _DataListState extends State<DataList> {
                   );
                 }
 
-              );
-            }
-            else return Center(child: CircularProgressIndicator(),);
-          }
-        ),
+              ),
     );
-  }
-}
+            }
+          }
+
